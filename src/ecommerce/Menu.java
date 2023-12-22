@@ -39,7 +39,7 @@ public class Menu {
 			System.out.println("            1 - Cadastrar Produto                    ");
 			System.out.println("            2 - Listar todos Produtos                ");
 			System.out.println("            3 - Buscar Produto por Numero            ");
-			System.out.println("            4 - Atualizar Dados do Produto           ");
+			//System.out.println("            4 - Atualizar Dados do Produto           ");
 			System.out.println("            5 - Excluir Produto                      ");
 			System.out.println("            6 - Comprar                              ");
 			System.out.println("            7 - Sair                                 ");
@@ -116,10 +116,25 @@ public class Menu {
 					break;
 				case 5:
 					System.out.println("Apagar a Produto\n\n");
+					
+					System.out.println("Digite o número do produto: ");
+					numero = leia.nextInt();
+					
+					produto.deletar(numero);
 					keyPress();
 					break;
 				case 6:
 					System.out.println("Comprar\n\n");
+					System.out.println("Digite o número do produto: ");
+					numero = leia.nextInt();
+					
+					do {
+						System.out.println("Digite a quantidade do produto: ");
+						quantidade = leia.nextInt();	
+					}while(quantidade <=0);
+					
+					produto.comprar(numero, quantidade);
+					
 					keyPress();
 					break;
 				default:

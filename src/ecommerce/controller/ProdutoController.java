@@ -38,19 +38,35 @@ public class ProdutoController implements ProdutoRepository {
 
 	@Override
 	public void atualizar(Produto produto) {
-		// TODO Auto-generated method stub
+		var buscaProduto = buscarNaCollection(produto.getNumero());
+		if(buscaProduto != null) {
+			listaProdutos.set(listaProdutos.indexOf(buscaProduto), produto);
+			System.out.println("\n O produto número: " + produto.getNumero() + " foi atualizado com sucesso!");
+		}else
+			System.out.println("\n O produto número " + produto.getNumero() + "não foi encontrado!");
 		
 	}
 
 	@Override
 	public void deletar(int numero) {
-		// TODO Auto-generated method stub
+		var produto = buscarNaCollection(numero);
 		
+		if(produto != null) {
+			if(listaProdutos.remove(produto) == true);
+			System.out.println("\n O produto número: " +  numero + " foi deletada com sucesso!");
+		}else
+			System.out.println("\n O produto: " + numero + " não foi encontrado!");
 	}
 
 	@Override
-	public void comprar(int numero, float quantidade) {
-		// TODO Auto-generated method stub
+	public void comprar(int numero, int quantidade) {
+		var produto = buscarNaCollection(numero);
+		
+		if (produto != null) {
+			if(produto.comprar(quantidade) == true);
+			System.out.println("\n Compra do produto " + numero + " foi efetuada com sucesso!");
+		}else
+			System.out.println("\n O produto numero: " + numero + " não foi encontrado!");
 		
 	}
 	

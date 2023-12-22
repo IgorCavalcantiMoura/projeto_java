@@ -1,14 +1,17 @@
 package ecommerce;
 
 import ecommerce.util.Cores;
-
+import ecommerce.controller.ProdutoController;
 import ecommerce.model.Produto;
 
 import ecommerce.model.ProdutoRoupa;
 
 import ecommerce.model.ProdutoLivro;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+
 
 public class Menu {
 
@@ -16,13 +19,13 @@ public class Menu {
 		
 		Scanner leia = new Scanner(System.in);
 
-		int opcao;
+		int opcao, numero, quantidade , tipo, tamanho;
+		float valor;
+		String nome, editora;
 		
-		ProdutoRoupa r1 = new ProdutoRoupa(321, 15, 10, "Blusa", 1, 38);
-		r1.visualizar();
+		ProdutoController produto = new ProdutoController();
 		
-		ProdutoLivro l1 = new ProdutoLivro(541, 47, 8, "Harry Potter", 2, "Generation");
-		l1.visualizar();
+	
 		
 		while (true) {
 
@@ -46,8 +49,15 @@ public class Menu {
 			System.out.println("                                                     ");
 			System.out.println("                                                     " + Cores.TEXT_RESET);
 			
-			opcao = leia.nextInt();
-
+			
+			try {
+				opcao = leia.nextInt();
+			} catch (InputMismatchException e) {
+				System.out.println("\nDigite valores inteiros!");
+				leia.nextLine();
+				opcao = 0;
+			}
+			
 			if (opcao == 7) {
 				System.out.println("\nMercado Livre - Compre com um clique!");
 				sobre();
@@ -58,30 +68,63 @@ public class Menu {
 			switch (opcao) {
 				case 1:
 					System.out.println("Cadastrar Produto\n\n");
-
+					System.out.println("Digite o Número do Produto: ");
+					numero = leia.nextInt();	
+					System.out.println("Digite o Nome do Produto: ");
+					leia.skip("\\R?");
+					nome = leia.nextLine();
+					System.out.println("Digite a quantidade do Produto: ");
+					leia.skip("\\R?");
+					quantidade = leia.nextInt();
+					
+					do {
+						System.out.println("Digite o Tipo do Produto (1-Roupa ou 2-Livro): ");
+						tipo = leia.nextInt();
+					}while(tipo <1 && tipo >2);
+					
+					System.out.println("Digite o Preço do Produto (R$): ");
+					valor = leia.nextFloat();
+					
+					switch(tipo) {
+					case 1 -> {
+						System.out.println("Digite o tamnaho: ");
+						tamanho = leia.nextInt();
+						produto.cadastrar(new ProdutoRoupa(numero, valor, quantidade,nome, tipo, tamanho));
+					}
+					case 2 -> {
+						System.out.println("Digite a editora: ");
+						editora = leia.nextLine();
+						produto.cadastrar(new ProdutoLivro(numero, valor, quantidade, nome,tipo, editora));
+					}
+				}
+					keyPress();
 					break;
 				case 2:
 					System.out.println("Listar todos Produtos\n\n");
-
+					produto.listarTodas();
+					keyPress();
 					break;
 				case 3:
 					System.out.println("Consultar dados do Produto - por número\n\n");
-
+					System.out.println("Digite o número do produto: ");
+					numero = leia.nextInt();
+					keyPress();
 					break;
 				case 4:
 					System.out.println("Atualizar dados do Produto\n\n");
-
+					keyPress();
 					break;
 				case 5:
 					System.out.println("Apagar a Produto\n\n");
-
+					keyPress();
 					break;
 				case 6:
 					System.out.println("Comprar\n\n");
-
+					keyPress();
 					break;
 				default:
 					System.out.println("\nOpção Inválida!\n");
+					keyPress();
 					break;
 			}
 		}
@@ -94,6 +137,20 @@ public class Menu {
 		System.out.println("https://github.com/IgorCavalcantiMoura/projeto_java");
 		System.out.println("*********************************************************");
 	}
-	
+	public static void keyPress() {
+
+		try {
+
+			System.out.println(Cores.TEXT_RESET + "\n\nPressione Enter para Continuar...");
+			System.in.read();
+
+		} catch (IOException e) {
+
+			System.out.println("Você pressionou uma tecla diferente de enter!");
+
+		}
+	}
 
 }
+
+

@@ -2,6 +2,12 @@ package ecommerce;
 
 import ecommerce.util.Cores;
 
+import ecommerce.model.Produto;
+
+import ecommerce.model.ProdutoRoupa;
+
+import ecommerce.model.ProdutoLivro;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -11,7 +17,13 @@ public class Menu {
 		Scanner leia = new Scanner(System.in);
 
 		int opcao;
-
+		
+		ProdutoRoupa r1 = new ProdutoRoupa(321, 15, 10, "Blusa", 1, 38);
+		r1.visualizar();
+		
+		ProdutoLivro l1 = new ProdutoLivro(541, 47, 8, "Harry Potter", 2, "Generation");
+		l1.visualizar();
+		
 		while (true) {
 
 			System.out.println(Cores.TEXT_WHITE + Cores.ANSI_BLUE_BACKGROUND
